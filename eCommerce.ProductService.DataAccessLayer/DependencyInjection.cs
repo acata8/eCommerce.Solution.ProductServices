@@ -12,8 +12,11 @@ namespace eCommerce.ProductService.DataAccessLayer
 
         public static IServiceCollection AddDataAccessLayer(this IServiceCollection services, IConfiguration configuration)
         {
-            var connectionString = configuration.GetConnectionString("DefaultConnection")
-            ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+            var connectionString = configuration.GetConnectionString("DefaultConnection")!;
+
+            connectionString = connectionString.Replace("$MYSQL_HOST", Environment.GetEnvironmentVariable("MYSQL_HOST"));
+            connectionString = connectionString.Replace("$MYSQL_PASSWORD", Environment.GetEnvironmentVariable("MYSQL_PASSWORD"));
+            //connectionString = connectionString.Replace("$MYSQL_PORT$", Environment.GetEnvironmentVariable("MYSQL_PORT") ?? "3306");
 
             services.AddDbContext<ProductServiceDbContext>(options =>
                 options.UseMySql(
