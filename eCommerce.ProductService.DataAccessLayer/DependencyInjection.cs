@@ -14,9 +14,12 @@ namespace eCommerce.ProductService.DataAccessLayer
         {
             var connectionString = configuration.GetConnectionString("DefaultConnection")!;
 
-            connectionString = connectionString.Replace("$MYSQL_HOST", Environment.GetEnvironmentVariable("MYSQL_HOST"));
-            connectionString = connectionString.Replace("$MYSQL_PASSWORD", Environment.GetEnvironmentVariable("MYSQL_PASSWORD"));
-            //connectionString = connectionString.Replace("$MYSQL_PORT$", Environment.GetEnvironmentVariable("MYSQL_PORT") ?? "3306");
+            connectionString = connectionString
+                            .Replace("$MYSQL_HOST", Environment.GetEnvironmentVariable("MYSQL_HOST"))
+                            .Replace("$MYSQL_PASSWORD", Environment.GetEnvironmentVariable("MYSQL_PASSWORD"))
+                            .Replace("$MYSQL_PORT", Environment.GetEnvironmentVariable("MYSQL_PORT"))
+                            .Replace("$MYSQL_USER", Environment.GetEnvironmentVariable("MYSQL_USER"))
+                            .Replace("$MYSQL_DATABASE", Environment.GetEnvironmentVariable("MYSQL_DATABASE"));
 
             services.AddDbContext<ProductServiceDbContext>(options =>
                 options.UseMySql(

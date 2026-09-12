@@ -33,7 +33,8 @@ public class ExceptionHandlingMiddleware
             httpContext.Response.StatusCode = 500;
 
             await httpContext.Response.WriteAsJsonAsync(
-                new { Message = ex.Message, Type = ex.GetType().ToString() }
+                new { Message = ex.Message, Type = ex.GetType().ToString(),
+                    InnerException = ex.InnerException?.Message  }
                 );
 
         }
