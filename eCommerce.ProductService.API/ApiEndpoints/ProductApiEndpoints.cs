@@ -22,9 +22,10 @@ public static class ProductAPIEndpoints
         {
             ProductResponse? product = await productsService.GetProductByCondition(temp => temp.ProductID == ProductID);
 
-        if (product == null) {
-                return Results.NotFound();  
-        } 
+            if (product == null)
+            {
+                return Results.NotFound();
+            }
 
             return Results.Ok(product);
         });
